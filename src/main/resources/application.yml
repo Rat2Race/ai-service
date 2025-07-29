@@ -1,1 +1,5 @@
-OPENAI_API_KEY: null
+spring:
+  application:
+    name: spring-ai
+  profiles:
+    include: secret
