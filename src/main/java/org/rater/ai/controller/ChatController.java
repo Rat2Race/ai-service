@@ -1,9 +1,8 @@
 package org.rater.ai.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.client.ChatClient;
+import org.rater.ai.service.ChatService;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,24 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChatController {
 
-    private final ChatClient chatClient;
-    private final OpenAiChatModel chatModel;
+    private final ChatService chatService;
 
     @GetMapping("/ai")
     public ResponseEntity<String> generation() {
-        String content = chatClient.prompt()
-            .user("hi, chatgpt")
-            .call()
-            .content();
-        return ResponseEntity.status(HttpStatus.OK).body(content);
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(chatService.getChatContent("hello, world"));
     }
 
     @PostMapping
     public ResponseEntity<ChatResponse> chat(@RequestBody String userInput) {
-        ChatResponse chatResponse = chatClient
-            .prompt("요약해: " + "hello, world")
-            .call()
-            .chatResponse();
-        return ResponseEntity.status(HttpStatus.OK).body(chatResponse);
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(chatService.getChatResponse(userInput));
     }
 }
