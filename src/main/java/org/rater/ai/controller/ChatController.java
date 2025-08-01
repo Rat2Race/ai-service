@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/ai")
 @RestController
 public class ChatController {
 
     private final ChatService chatService;
 
-    @GetMapping("/ai")
+    @GetMapping("/test")
     public ResponseEntity<String> generation() {
         return ResponseEntity.status(HttpStatus.OK)
             .body(chatService.getChatContent("hello, world"));
     }
 
-    @PostMapping
+    @PostMapping("/chat")
     public ResponseEntity<ChatResponse> chat(@RequestBody String userInput) {
         return ResponseEntity.status(HttpStatus.OK)
             .body(chatService.getChatResponse(userInput));

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class OpenAiConfig {
+public class ChatModelConfig {
 
     // 나중에 환경변수로 설정
     @Value("${spring.ai.openai.api-key}")

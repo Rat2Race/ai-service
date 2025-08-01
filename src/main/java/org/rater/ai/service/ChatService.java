@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ChatService {
+
     private final ChatClient chatClient;
     private final PromptService promptService;
 
