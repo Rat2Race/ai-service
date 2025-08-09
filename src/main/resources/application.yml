@@ -3,3 +3,6 @@ spring:
     name: spring-ai
   profiles:
     include: secret
+logging:
+  level:
+    root: info

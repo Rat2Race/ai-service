@@ -15,6 +15,15 @@ public class ChatModelConfig {
     @Value("${spring.ai.openai.api-key}")
     private String apiKey;
 
+    @Value("${spring.ai.openai.model}")
+    private String model;
+
+    @Value("${spring.ai.openai.temperature}")
+    private Double temperature;
+
+    @Value("${spring.ai.openai.maxTokens}")
+    private Integer maxTokens;
+
     @Bean
     public OpenAiApi openAiApi() {
         return OpenAiApi.builder()
@@ -25,9 +34,9 @@ public class ChatModelConfig {
     @Bean
     public OpenAiChatOptions openAiChatOptions() {
         return OpenAiChatOptions.builder()
-            .model("gpt-3.5-turbo")
-            .temperature(0.7)
-            .maxTokens(1024)
+            .model(model)
+            .temperature(temperature)
+            .maxTokens(maxTokens)
             .build();
     }
 

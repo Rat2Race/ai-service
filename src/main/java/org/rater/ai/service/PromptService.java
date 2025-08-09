@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PromptService {
+
     @Value("classpath:data/prompts/system-message.txt")
     private Resource systemMessage;
 

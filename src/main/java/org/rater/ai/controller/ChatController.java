@@ -18,11 +18,11 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> generation() {
-        return ResponseEntity.status(HttpStatus.OK)
-            .body(chatService.getChatContent("hello, world"));
-    }
+//    @GetMapping("/test")
+//    public ResponseEntity<String> generation() {
+//        return ResponseEntity.status(HttpStatus.OK)
+//            .body(chatService.getChatContent("hello, world"));
+//    }
 
     @PostMapping("/chat")
     public ResponseEntity<ChatResponse> chat(@RequestBody String userInput) {
