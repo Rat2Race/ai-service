@@ -14,13 +14,7 @@ public class RagConfig {
 
     @Bean
     public TokenTextSplitter tokenTextSplitter() {
-        return TokenTextSplitter.builder()
-            .withChunkSize(500)
-            .withMinChunkSizeChars(200)
-            .withMinChunkLengthToEmbed(10)
-            .withMaxNumChunks(10000)
-            .withKeepSeparator(true)
-            .build();
+        return new TokenTextSplitter(300, 50, 10, 10000, true);
     }
 
     @Bean

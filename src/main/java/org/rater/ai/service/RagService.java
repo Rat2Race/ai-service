@@ -13,6 +13,7 @@ import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 @Slf4j
@@ -27,12 +28,23 @@ public class RagService {
     public void addDocument(String content, String source) {
         log.info("문서 추가 시작: {}", source);
 
-        Document document = new Document(content,
+        if (!StringUtils.hasText(content)) {
+            throw new IllegalArgumentException("문서 내용이 비어있습니다");
+        }
+
+        Document originalDocument = new Document(content,
             Map.of("source", source, "timestamp", Instant.now().toString()));
 
-        List<Document> documents = splitter.split(document);
+        log.debug("원본 문서 길이: {} 글자", content.length());
+        
+        List<Document> documents = splitter.split(originalDocument);
+        
+        log.info("청킹 완료: 원본 1개 -> {}개 청크로 분할", documents.size());
+        for (int i = 0; i < documents.size(); i++) {
+            log.debug("청크 {}: {} 글자", i + 1, documents.get(i).getText().length());
+        }
 
-        documents.forEach(doc -> doc.getMetadata().putAll(document.getMetadata()));
+        documents.forEach(doc -> doc.getMetadata().putAll(originalDocument.getMetadata()));
 
         vectorStore.add(documents);
 
