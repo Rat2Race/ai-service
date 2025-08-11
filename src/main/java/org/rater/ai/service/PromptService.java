@@ -19,17 +19,17 @@ public class PromptService {
     @Value("classpath:data/prompts/user-message.txt")
     private Resource userMessage;
 
-    private Message createUserMessage(String userInput) {
+    private Message toUserMessage(String userInput) {
         PromptTemplate promptTemplate = new PromptTemplate(userMessage);
         return promptTemplate.createMessage(Map.of("userInput", userInput));
     }
 
-    private Message createSystemMessage(String userInput) {
+    private Message toSystemMessage() {
         SystemPromptTemplate systemPromptTemplate = new SystemPromptTemplate(systemMessage);
         return systemPromptTemplate.createMessage();
     }
 
     public Prompt createPrompt(String userInput) {
-        return new Prompt(List.of(createUserMessage(userInput), createSystemMessage(userInput)));
+        return new Prompt(List.of(toUserMessage(userInput), toSystemMessage()));
     }
 }
