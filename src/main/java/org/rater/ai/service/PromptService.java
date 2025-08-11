@@ -30,6 +30,6 @@ public class PromptService {
     }
 
     public Prompt createPrompt(String userInput) {
-        return new Prompt(List.of(toUserMessage(userInput), toSystemMessage()));
+        return new Prompt(List.of(toSystemMessage(), toUserMessage(userInput)));
     }
 }

@@ -1,5 +1,6 @@
 package org.rater.ai.service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,12 @@ public class RagService {
     public void addDocument(String content, String source) {
         log.info("문서 추가 시작: {}", source);
 
-        Document document = new Document(content);
+        Document document = new Document(content,
+            Map.of("source", source, "timestamp", Instant.now().toString()));
+
         List<Document> documents = splitter.split(document);
+
+        documents.forEach(doc -> doc.getMetadata().putAll(document.getMetadata()));
 
         vectorStore.add(documents);
 
@@ -37,9 +42,9 @@ public class RagService {
     public String ask(String question) {
         log.debug("질문 받음: {}", question);
 
-        Prompt prompt = promptService.createPrompt(question);
+//        Prompt prompt = promptService.createPrompt(question);
 
-        String answer = chatClient.prompt(prompt)
+        String answer = chatClient.prompt()
             .user(question)
             .call()
             .content();
