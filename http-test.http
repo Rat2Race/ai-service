@@ -1,0 +1,38 @@
+### 헬스 체크
+GET http://localhost:8080/api/rag/health
+
+### 텍스트 문서 추가
+POST http://localhost:8080/api/rag/documents/text
+Content-Type: application/json
+
+{
+  "content": "Spring Boot는 스프링 프레임워크를 쉽게 사용할 수 있게 해주는 도구입니다. 자동 설정, 내장 서버, 스타터 의존성 등을 제공합니다.",
+  "source": "spring-boot-intro.txt"
+}
+
+### 파일 업로드
+POST http://localhost:8080/api/rag/documents/file
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="test.txt"
+Content-Type: text/plain
+
+테스트 문서 내용입니다.
+--boundary--
+
+### 질문하기
+POST http://localhost:8080/api/rag/ask
+Content-Type: application/json
+
+{
+  "question": "Spring Boot의 주요 특징은 무엇인가요?"
+}
+
+#### 출처 포함 질문
+#POST http://localhost:8080/api/rag/ask-with-sources
+#Content-Type: application/json
+#
+#{
+#  "question": "Spring Boot가 제공하는 기능은?"
+#}

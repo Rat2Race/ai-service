@@ -1,4 +1,4 @@
-package org.rater.gptservice;
+package org.rater.ai;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
